@@ -8,11 +8,7 @@ console.log('client Email: ', keys.firestoreClientEmail);
 console.log('Private Key', keys.firestorePrivateKey);
 
 admin.initializeApp({
-    credential: admin.credential.cert({
-        projectId: keys.firestoreProjectID,
-        clientEmail: keys.firestoreClientEmail,
-        privateKey: keys.firestorePrivateKey,
-    }),
+    credential: admin.credential.cert(require('../gcpconfig.json')),
     databaseURL: keys.firestoreDB,
 });
 
