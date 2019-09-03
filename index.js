@@ -20,11 +20,6 @@ require('./services/passport.js');
 app.use(passport.initialize());
 app.use(passport.session());
 
-app.get('/', (req, res) => {
-    res.send('Hello :) ');
-    console.log('Home');
-});
-
 require('./routes/auth.js')(app);
 
 if (process.env.NODE_ENV === 'production') {
