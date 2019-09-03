@@ -3,6 +3,10 @@ const admin = require('firebase-admin');
 
 const keys = require('../config/keys');
 
+console.log('Project ID: ', keys.firestoreProjectID);
+console.log('Client Email: ', keys.firestoreClientEmail);
+console.log('Private Key', keys.firestorePrivateKey);
+
 admin.initializeApp({
     credential: admin.credential.cert({
         projectId: keys.firestoreProjectID,
