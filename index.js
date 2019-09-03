@@ -1,57 +1,31 @@
 const express = require('express');
 const passport = require('passport');
+const bodyParser = require('body-parser');
+const cookieSession = require('cookie-session');
 const GoogleStrategy = require('passport-google-oauth20').Strategy;
 const keys = require('./config/keys');
 
-//Firebase
-const admin = require('firebase-admin');
+const app = express();
 
-let serviceAccount = require('./config/firestoreKeys.json');
+app.use(bodyParser.json());
+app.use(
+    cookieSession({
+        maxAge: 30 * 24 * 60 * 60 * 1000,
+        keys: [keys.cookieKey],
+    })
+);
 
-admin.initializeApp({
-    credential: admin.credential.cert(serviceAccount),
-    databaseURL: 'https://all-the-job-sites-dev.firebaseio.com',
+require('./services/passport.js');
+
+app.use(passport.initialize());
+app.use(passport.session());
+
+app.get('/', (req, res) => {
+    res.send('Hello :) ');
+    console.log('Home');
 });
 
-let db = admin.firestore();
-
-let docRef = db.collection('users').doc('alovelace');
-
-let setAda = docRef.set({
-    first: 'Ada',
-    last: 'Lovelac',
-    born: 1815,
-});
-
-console.log(docRef);
-console.log(setAda);
-
-passport.use(
-    new GoogleStrategy(
-        {
-            clientID: keys.googleClientID,
-            clientSecret: keys.googleClientSecret,
-            callbackURL: '/auth/google/callback',
-        },
-        (accessToken, refreshToken, profile, done) => {
-            console.log(accessToken);
-            console.log('what the hell is going on!?');
-        }
-    )
-);
-
-app.get(
-    '/auth/google',
-    passport.authenticate('google', { scope: ['profile', 'email'] })
-);
-
-app.get(
-    '/auth/google/callback',
-    passport.authenticate('google'),
-    (req, res) => {
-        res.redirect('/surveys');
-    }
-);
+require('./routes/auth.js')(app);
 
 const PORT = process.env.NODE_ENV === 'production' || 5000;
 app.listen(PORT);

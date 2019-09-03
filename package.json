@@ -8,9 +8,15 @@
         "server": "nodemon index.js",
         "test": "echo \"Error: no test specified\" && exit 1"
     },
+    "engines": {
+        "node": "^11.11.0",
+        "npm": "^6.10.2"
+    },
     "author": "",
     "license": "ISC",
     "dependencies": {
+        "body-parser": "^1.19.0",
+        "cookie-session": "^1.3.3",
         "express": "^4.17.1",
         "firebase-admin": "^8.4.0",
         "nodemon": "^1.19.1",
