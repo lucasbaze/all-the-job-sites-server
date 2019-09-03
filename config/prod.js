@@ -4,9 +4,6 @@ module.exports = {
     cookieKey: process.env.COOKIE_KEY,
     firestoreProjectID: process.env.FIRESTORE_PROJECT_ID,
     firestoreClientEmail: process.env.FIRESTORE_CLIENT_EMAIL,
-    firestorePrivateKey: process.env.FIRESTORE_PRIVATE_KEY.replace(
-        /\\n/g,
-        '\n'
-    ),
+    firestorePrivateKey: process.env.FIRESTORE_PRIVATE_KEY,
     firestoreDB: process.env.FIRESTORE_DB,
 };
