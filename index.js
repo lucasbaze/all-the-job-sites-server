@@ -17,8 +17,8 @@ app.use(
 
 require('./services/passport.js');
 
-// app.use(passport.initialize());
-// app.use(passport.session());
+app.use(passport.initialize());
+app.use(passport.session());
 
 app.get('/', (req, res) => {
     res.send('Hello :) ');
@@ -27,5 +27,5 @@ app.get('/', (req, res) => {
 
 require('./routes/auth.js')(app);
 
-const PORT = process.env.NODE_ENV === 'production' || 5000;
+const PORT = process.env.PORT || 5000;
 app.listen(PORT);
