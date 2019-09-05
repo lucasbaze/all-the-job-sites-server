@@ -12,7 +12,7 @@ passport.use(
             proxy: true,
         },
         async (accessToken, refreshToken, profile, done) => {
-            console.log(profile);
+            console.log('profile: ', profile);
 
             //Find the exisiting User
             let existingUser = await db
@@ -41,7 +41,7 @@ passport.use(
             //Return the existing user
             if (existingUser) {
                 console.log('I found the user');
-                console.log(existingUser);
+                console.log('existing user: ', existingUser);
                 return done(null, existingUser);
             }
 
@@ -55,12 +55,25 @@ passport.use(
             let photo =
                 profile.photos[0] !== null ? profile.photos[0].value : '';
 
-            const newUser = await db.collection('users').add({
-                googleID: `${profile.id}`,
-                displayName: `${displayName}`,
-                email: `${email}`,
-                photo: `${photo}`,
-            });
+            const newUser = await db
+                .collection('users')
+                .add({
+                    googleID: `${profile.id}`,
+                    displayName: `${displayName}`,
+                    email: `${email}`,
+                    photo: `${photo}`,
+                })
+                .then(ref => {
+                    console.log('Added document with ID: ', ref.id);
+                    db.collection('users')
+                        .doc(ref.id)
+                        .collection('saved_jobs')
+                        .add({
+                            link:
+                                'Your First Saved Job! Congrats! You are 1 step closer to your dream job!',
+                            status: 'new',
+                        });
+                });
 
             done(null, newUser);
         }
