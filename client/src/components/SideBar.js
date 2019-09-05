@@ -87,7 +87,6 @@ const SideBar = () => {
     const [collapsed, setCollapsed] = useState(false);
     const [openAbout, setOpenAbout] = useState(false);
     const [{ searchValue, user }, dispatch] = useStateValue();
-    //const [searchValue, setSearchValue] = useState('');
 
     const updateCollapsed = () => {
         console.log(collapsed);
@@ -104,7 +103,7 @@ const SideBar = () => {
 
     useEffect(() => {
         axios.get('/api/current_user').then(response => {
-            console.log(response.data);
+            console.log('Line 106:', response.data);
             dispatch({ type: FETCH_USER, payload: response.data });
         });
     }, []);

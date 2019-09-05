@@ -3,17 +3,17 @@ const admin = require('firebase-admin');
 
 const keys = require('../config/keys');
 
-//Development
-// admin.initializeApp({
-//     credential: admin.credential.cert(keys.firestoreKeys),
-//     databaseURL: keys.firestoreDB,
-// });
-
-//Production
-admin.initializeApp({
-    credential: admin.credential.cert(require('../gcpconfig.json')),
-    databaseURL: keys.firestoreDB,
-});
+if (process.env.NODE_ENV === 'production') {
+    admin.initializeApp({
+        credential: admin.credential.cert(require('../gcpconfig.json')),
+        databaseURL: keys.firestoreDB,
+    });
+} else {
+    admin.initializeApp({
+        credential: admin.credential.cert(keys.firestoreKeys),
+        databaseURL: keys.firestoreDB,
+    });
+}
 
 module.exports = admin.firestore();
 

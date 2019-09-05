@@ -21,6 +21,7 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 require('./routes/auth.js')(app);
+require('./routes/userRoutes.js')(app);
 
 if (process.env.NODE_ENV === 'production') {
     app.use(express.static('/client/build'));
