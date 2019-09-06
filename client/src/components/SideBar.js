@@ -191,6 +191,11 @@ const SideBar = () => {
                                 About Us
                             </Link>
                         </StyledLink>
+                        {_.isEmpty(user) ? null : (
+                            <StyledLink>
+                                <Link to="/user-profile">Profile</Link>
+                            </StyledLink>
+                        )}
                     </div>
                     <div>
                         {_.isEmpty(user) ? (
