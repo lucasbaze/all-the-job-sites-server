@@ -1,41 +1,17 @@
 import React, { useEffect } from 'react';
 import { Header, Icon, Button, Image } from 'semantic-ui-react';
-import styled from 'styled-components';
 import { FacebookShareButton, TwitterShareButton } from 'react-share';
 
-import FeaturedJob from './FeaturedJob';
+import FeaturedJob from '../../components/FeaturedJob';
 
-const StyledHomePage = styled.div`
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-end;
-    height: 100vh;
-    width: 100%;
-`;
-
-const StyledContainer = styled.div`
-    height: 100vh;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-`;
-
-const StyledValueProp = styled.div`
-    text-align: center;
-`;
-
-const StyledFeaturedJobs = styled.div`
-    width: 90%;
-    margin: 0 auto;
-`;
-
-const ShareButtons = styled.div`
-    display: flex;
-    justify-content: center;
-    margin-bottom: 7px;
-`;
-
-//height: calc(100vh - 50px);
+//CSS
+import {
+    StyledHomePage,
+    StyledContainer,
+    StyledValueProp,
+    StyledFeaturedJobs,
+    ShareButtons,
+} from './Styled.js';
 
 const HomePage = () => {
     useEffect(() => {

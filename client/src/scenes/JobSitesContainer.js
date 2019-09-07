@@ -3,7 +3,7 @@ import { Header, List, Icon } from 'semantic-ui-react';
 import styled from 'styled-components';
 
 import { sites } from '../sites.js';
-import JobLink from './JobLink.js';
+import JobLink from '../components/JobLink.js';
 
 const StyledCategory = styled(Header)`
     padding-bottom: 5px;

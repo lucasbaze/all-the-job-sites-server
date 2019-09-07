@@ -1,15 +1,17 @@
 import React from 'react';
-import { useStateValue } from '../state';
+import { useStateValue } from '../../state';
 import _ from 'lodash';
 
 import styled from 'styled-components';
 import { Header, Segment } from 'semantic-ui-react';
-import SavedJobs from './SavedJobs';
+import SavedJobs from '../../components/SavedJobs';
 
 const ProfileContainer = styled.div`
     padding: 30px;
     display: flex;
     flex-direction: column;
+    height: 100vh;
+    overflow: scroll;
 `;
 
 const StyledUserNav = styled(Segment)`
@@ -37,7 +39,7 @@ const UserProfile = () => {
             {_.isEmpty(user) ? (
                 <Header as="h1" content="Please Login" />
             ) : (
-                <>
+                <div>
                     <StyledUserNav>
                         <StyledUserImage src={user.photo} />
                         <StyledUserInfo>
@@ -46,7 +48,7 @@ const UserProfile = () => {
                         </StyledUserInfo>
                     </StyledUserNav>
                     <SavedJobs />
-                </>
+                </div>
             )}
         </ProfileContainer>
     );

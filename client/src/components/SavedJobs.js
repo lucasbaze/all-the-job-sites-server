@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
 import styled from 'styled-components';
-import { Header, Segment, Form } from 'semantic-ui-react';
+import { Header, Segment, Form, Icon, Dropdown } from 'semantic-ui-react';
 
 const SavedJobs = props => {
     const [jobLink, setJobLink] = useState('');
@@ -39,9 +39,27 @@ const SavedJobs = props => {
             .catch(err => console.log(err));
     }, []);
 
+    let options = [
+        {
+            key: 'new',
+            text: 'New',
+            value: 'new',
+        },
+        {
+            key: 'applied',
+            text: 'Applied',
+            value: 'applied',
+        },
+        {
+            key: 'archived',
+            text: 'Archived',
+            value: 'archived',
+        },
+    ];
+
     return (
-        <>
-            <Header as="h1" content="Add Job" />
+        <div>
+            <Header as="h1" content="Add Job" style={{ marginBottom: 10 }} />
             <Form onSubmit={handleSubmit}>
                 <Form.Group>
                     <Form.Field
@@ -65,9 +83,29 @@ const SavedJobs = props => {
             </Form>
             <Header as="h1" content="Saved Jobs" />
             {savedJobs.map(job => {
-                return <p>{job.link}</p>;
+                let jobLink = job.link.substring(8, 35).concat('...');
+                return (
+                    <Segment
+                        style={{
+                            marginBottom: 0,
+                            display: 'flex',
+                            justifyContent: 'space-between',
+                            alignItems: 'center',
+                        }}
+                    >
+                        <a href={job.link} target="_blank">
+                            {jobLink}
+                        </a>
+                        <Dropdown
+                            selection
+                            value={job.status}
+                            options={options}
+                        />
+                        <Icon name="external" color="blue" />
+                    </Segment>
+                );
             })}
-        </>
+        </div>
     );
 };
 
