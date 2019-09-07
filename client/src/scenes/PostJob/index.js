@@ -1,19 +1,11 @@
 import React, { useEffect } from 'react';
 
 import { Container, Header } from 'semantic-ui-react';
-import styled from 'styled-components';
 import { ReactTypeformEmbed } from 'react-typeform-embed';
 
-import FeaturedJob from './FeaturedJob';
+import FeaturedJob from '../../components/FeaturedJob';
 
-const StyledTypeFormContainer = styled.div`
-    display: block;
-    position: relative;
-    box-shadow: 3px 0px 5px rgba(112, 112, 112, 0.4);
-    border-radius: 20px;
-    height: calc(100vh - 34vh);
-    width: 100%;
-`;
+import { StyledTypeFormContainer } from './Styled';
 
 const PostJob = () => {
     useEffect(() => {

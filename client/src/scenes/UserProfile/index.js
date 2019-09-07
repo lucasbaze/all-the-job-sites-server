@@ -1,10 +1,10 @@
 import React from 'react';
-import { useStateValue } from '../state';
+import { useStateValue } from '../../state';
 import _ from 'lodash';
 
 import styled from 'styled-components';
 import { Header, Segment } from 'semantic-ui-react';
-import SavedJobs from './SavedJobs';
+import SavedJobs from '../../components/SavedJobs';
 
 const ProfileContainer = styled.div`
     padding: 30px;

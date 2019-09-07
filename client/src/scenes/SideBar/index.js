@@ -1,85 +1,29 @@
 import React, { useState, useEffect } from 'react';
-import {
-    Header,
-    Input,
-    Button,
-    Modal,
-    Image,
-    Responsive,
-} from 'semantic-ui-react';
-import JobSitesContainer from './JobSitesContainer.js';
-
-import { useStateValue } from '../state';
-import { Link } from 'react-router-dom';
-
-import * as actions from '../actions';
-import { FETCH_USER } from '../actions/types.js';
 import axios from 'axios';
 import _ from 'lodash';
 
+//State
+import { useStateValue } from '../../state';
+import * as actions from '../../actions';
+import { FETCH_USER, UPDATE_SEARCH } from '../../actions/types.js';
+
+//Components
+import { Header, Input, Button, Image, Responsive } from 'semantic-ui-react';
+import JobSitesContainer from '../JobSitesContainer.js';
+import { Link } from 'react-router-dom';
+import BottomMenu from '../../components/BottomMenu.js';
+import { AboutUs } from '../../components/Modals';
+
+//CSS
 import styled from 'styled-components';
-import BottomMenu from './BottomMenu.js';
 
-const StyledSideBar = styled.div`
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    align-items: stretch;
-    overflow: scroll;
-    padding: 15px;
-
-    .input {
-        width: 100%;
-    }
-`;
-
-const StyledButton = styled(Button)`
-    padding: 0 10;
-`;
-
-const SideBarContainer = styled.div`
-    flex: ${props => (props.collapsed ? 0.6 : 1.1)};
-    height: 100vh;
-    display: flex;
-    flex-flow: column nowrap;
-    justify-content: space-between;
-    overflow-y: scroll;
-    overflow-x: hidden;
-    box-shadow: 3px 0px 5px rgba(112, 112, 112, 0.4);
-    transition: flex 0.3s linear;
-    z-index: 999;
-    min-width: 260px;
-`;
-
-const StyledTopBar = styled.div`
-    padding: 15px;
-    box-shadow: 0px 3px 5px #eaeaea;
-`;
-
-const StyledLink = styled(Link)`
-    margin-right: 10px;
-
-    color: black;
-    :hover {
-        color: green;
-    }
-
-    a {
-        color: black;
-        :hover {
-            color: green;
-        }
-    }
-`;
-
-const StyledALink = styled.a`
-    color: black;
-    margin-right: 10px;
-    :hover {
-        color: green;
-    }
-`;
+import {
+    StyledSideBar,
+    SideBarContainer,
+    StyledTopBar,
+    StyledLink,
+    StyledALink,
+} from './Styled';
 
 const SideBar = () => {
     const [isLoading, setIsLoading] = useState(false);
@@ -102,19 +46,14 @@ const SideBar = () => {
     }, [searchValue]);
 
     useEffect(() => {
-        axios.get('/api/current_user').then(response => {
-            console.log('Line 106:', response.data);
-            dispatch({ type: FETCH_USER, payload: response.data });
-        });
+        actions.fetchUser(dispatch);
     }, []);
 
     const handleSearchChange = event => {
         setIsLoading(true);
 
-        dispatch({
-            type: 'updateSearch',
-            payload: event.target.value,
-        });
+        //UPDATE SEARCH VALUE
+        actions.updateSearch(dispatch, event.target.value);
 
         setTimeout(() => {
             if (searchValue.length < 1) return;
@@ -237,10 +176,7 @@ const SideBar = () => {
                                     icon: 'close',
                                     basic: true,
                                     onClick: function() {
-                                        dispatch({
-                                            type: 'updateSearch',
-                                            payload: '',
-                                        });
+                                        actions.updateSearch(dispatch, '');
                                         setAllOpen(false);
                                         window.gtag('event', 'search', {
                                             event_category: 'navigation',
@@ -277,40 +213,7 @@ const SideBar = () => {
                 updateCollapsed={updateCollapsed}
                 collapsed={collapsed}
             />
-            <Modal
-                size="tiny"
-                open={openAbout}
-                onClose={() => {
-                    setOpenAbout(false);
-                    window.gtag('event', 'navigate', {
-                        event_category: 'navigation',
-                        event_label: 'close about us',
-                    });
-                }}
-                closeIcon
-            >
-                <Header as="h2" icon="thumbs up outline" content="Welcome!" />
-                <Modal.Content>
-                    <p>All The Job Sites is built by AllTheJobSites, Inc.</p>
-                    <p>
-                        The motivation of this site is to make job search
-                        easier. There are hundreds of job boards and finding all
-                        the jobs is a nightmare. All The Job Sites is the #1
-                        place to make all of this easier.
-                    </p>
-                    <p>
-                        The team currently consists of{' '}
-                        <a href="https://www.linkedin.com/in/lucas-bazemore-b3ba1264/">
-                            Lucas Bazemore
-                        </a>{' '}
-                        and{' '}
-                        <a href="https://www.linkedin.com/in/cameronskelley/">
-                            Cameron Kelley
-                        </a>
-                        .
-                    </p>
-                </Modal.Content>
-            </Modal>
+            <AboutUs open={openAbout} setOpen={setOpenAbout} />
         </SideBarContainer>
     );
 };
