@@ -62,7 +62,10 @@ module.exports = app => {
                     .then(querySnapshot => {
                         let savedJobs = [];
                         querySnapshot.forEach(documentSnapshot => {
-                            savedJobs.push(documentSnapshot.data());
+                            savedJobs.push({
+                                ...documentSnapshot.data(),
+                                key: documentSnapshot.ref.path,
+                            });
                         });
                         res.send(savedJobs);
                     });

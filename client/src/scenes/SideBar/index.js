@@ -132,7 +132,7 @@ const SideBar = () => {
                         </StyledLink>
                         {_.isEmpty(user) ? null : (
                             <StyledLink>
-                                <Link to="/user-profile">Profile</Link>
+                                <Link to="/me">Profile</Link>
                             </StyledLink>
                         )}
                     </div>

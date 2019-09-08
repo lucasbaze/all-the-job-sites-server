@@ -8,7 +8,7 @@ import SideBar from '../SideBar';
 import SiteContent from '../../components/SiteContent';
 import PostJob from '../PostJob';
 import ContactUs from '../ContactUs';
-import UserProfile from '../UserProfile';
+import User from '../User';
 
 //State
 import { StateProvider } from '../../state';
@@ -35,14 +35,10 @@ const App = props => {
                         <Route exact path="/post-job" component={PostJob} />
                         <Route
                             exact
-                            path="/:categorySlug/:nameSlug"
+                            path="/site/:categorySlug/:nameSlug"
                             component={SiteContent}
                         />
-                        <Route
-                            exact
-                            path="/user-profile"
-                            component={UserProfile}
-                        />
+                        <Route path="/me" component={User} />
                     </Responsive>
                 </MainContainer>
             </BrowserRouter>
